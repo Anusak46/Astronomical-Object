@@ -1,6 +1,6 @@
 {
-    "name": "astronomical_object",
-    "short_name": "astronomical_object",
+    "name": "account",
+    "short_name": "account",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
