@@ -12,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isAscending = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +25,32 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text(
+            'ลำดับวัตถุท้องฟ้า',
+            style: TextStyle(
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(
+                isAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  isAscending = !isAscending;
+                });
+              },
+            ),
+          ],
+          backgroundColor: Colors.grey.withOpacity(0.3),
+          elevation: 0,
+          toolbarHeight: 40,
+        ),
         body: Consumer<TransactionProvider>(
           builder: (context, provider, child) {
             if (provider.transactions.isEmpty) {
@@ -30,10 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('ไม่มีรายการ'),
               );
             } else {
+              var sortedTransactions = provider.transactions.toList();
+              sortedTransactions.sort((a, b) => isAscending
+                  ? a.amount.compareTo(b.amount)
+                  : b.amount.compareTo(a.amount));
+
               return ListView.builder(
-                itemCount: provider.transactions.length,
+                itemCount: sortedTransactions.length,
                 itemBuilder: (context, index) {
-                  var statement = provider.transactions[index];
+                  var statement = sortedTransactions[index];
                   return Card(
                     elevation: 5,
                     margin:
@@ -47,8 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               image: const DecorationImage(
-                                image: AssetImage(
-                                    'images/A1.png'),
+                                image: AssetImage('images/A1.png'),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.circular(15),
@@ -56,21 +88,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         ListTile(
-                          title: _buildShadowedText(
-                              statement),
+                          title: _buildShadowedText(statement),
                           leading: CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors
-                                .black54,
+                            backgroundColor: Colors.black54,
                             child: FittedBox(
                               child: Text('${statement.amount}',
-                                  style: const TextStyle(
-                                      color: Colors.white)),
+                                  style: const TextStyle(color: Colors.white)),
                             ),
                           ),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete,
-                                color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               provider.deleteTransaction(statement.keyID);
                             },
