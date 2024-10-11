@@ -4,9 +4,14 @@ import 'package:account/models/transactions.dart';
 
 class TransactionProvider with ChangeNotifier {
   List<Transactions> transactions = [];
+  List<Transactions> transactionHistory = [];
 
   List<Transactions> getTransaction() {
     return transactions;
+  }
+
+  List<Transactions> getTransactionHistory() {
+    return transactionHistory;
   }
 
   void initData() async {
@@ -20,15 +25,25 @@ class TransactionProvider with ChangeNotifier {
     var db = await TransactionDB(dbName: 'transactions.db');
     var keyID = await db.insertDatabase(transaction);
     this.transactions = await db.loadAllData();
+
+    transactionHistory.add(transaction);
+    print('Added transaction: $transaction');
     print(this.transactions);
     notifyListeners();
   }
 
   void deleteTransaction(int? index) async {
-    print('delete index: $index');
+    if (index == null) return;
+
     var db = await TransactionDB(dbName: 'transactions.db');
+    Transactions? deletedTransaction =
+        transactions.firstWhere((t) => t.keyID == index);
+
     await db.deleteDatabase(index);
+
+    transactionHistory.add(deletedTransaction);
     this.transactions = await db.loadAllData();
+    print('Deleted transaction: $deletedTransaction');
     notifyListeners();
   }
 
@@ -36,6 +51,7 @@ class TransactionProvider with ChangeNotifier {
     var db = await TransactionDB(dbName: 'transactions.db');
     await db.updateDatabase(transaction);
     this.transactions = await db.loadAllData();
+    print('Updated transaction: $transaction');
     notifyListeners();
   }
 }

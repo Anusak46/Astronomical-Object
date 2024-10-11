@@ -1,5 +1,6 @@
 import 'package:account/screens/form_screen.dart';
 import 'package:account/screens/home_screen.dart';
+import 'package:account/screens/history_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -82,6 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     text: "เพิ่มวัตถุ",
                     icon: Icon(Icons.add_circle_outline),
                   ),
+                  Tab(
+                    text: "ประวัติ",
+                    icon: Icon(Icons.history),
+                  ),
                 ],
               ),
               Expanded(
@@ -89,6 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     HomeScreen(),
                     FormScreen(),
+                    HistoryScreen(),
                   ],
                 ),
               ),
