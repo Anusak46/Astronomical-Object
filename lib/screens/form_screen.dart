@@ -25,9 +25,23 @@ class _FormScreenState extends State<FormScreen> {
       appBar: AppBar(
         title: const Text(
           'แบบฟอร์มเพิ่มข้อมูล วัตถุท้องฟ้า',
-          style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                blurRadius: 5.0,
+                color: Colors.black,
+                offset: Offset(2.0, 2.0),
+              ),
+            ],
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 61, 61, 61),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -46,10 +60,20 @@ class _FormScreenState extends State<FormScreen> {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'รหัสวัตถุ',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
                     ),
                     autofocus: false,
                     controller: titleController,
@@ -61,10 +85,20 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'ชื่อวัตถุ',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
                     ),
                     autofocus: false,
                     controller: name,
@@ -76,10 +110,20 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'ประเภท',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
                     ),
                     autofocus: false,
                     controller: type,
@@ -91,10 +135,20 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'แคตาล็อก',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
                     ),
                     autofocus: false,
                     controller: Catalog,
@@ -106,10 +160,20 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'ลำดับวัตถุ',
                       filled: true,
-                      fillColor: Colors.white,
+                      fillColor: Colors.white.withOpacity(0.8),
+                      labelStyle: const TextStyle(
+                        color: Colors.black,
+                        shadows: [
+                          Shadow(
+                            blurRadius: 2.0,
+                            color: Colors.grey,
+                            offset: Offset(1.0, 1.0),
+                          ),
+                        ],
+                      ),
                     ),
                     keyboardType: TextInputType.number,
                     controller: amountController,
