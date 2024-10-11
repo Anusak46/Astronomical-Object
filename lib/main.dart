@@ -1,6 +1,7 @@
 import 'package:account/screens/form_screen.dart';
 import 'package:account/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
@@ -47,27 +48,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          body: TabBarView(
-            children: [
-              HomeScreen(),
-              FormScreen(),
-            ],
-          ),
-          bottomNavigationBar: TabBar(
-            tabs: [
-              Tab(
-                text: "รายการธุรกรรม",
-                icon: Icon(Icons.list),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("แอพบัญชี"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.exit_to_app),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        ),
+        body: const Column(
+          children: [
+            TabBar(
+              tabs: [
+                Tab(
+                  text: "รายการธุรกรรม",
+                  icon: Icon(Icons.list),
+                ),
+                Tab(
+                  text: "เพิ่มข้อมูล",
+                  icon: Icon(Icons.add),
+                ),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  HomeScreen(),
+                  FormScreen(),
+                ],
               ),
-              Tab(
-                text: "เพิ่มข้อมูล",
-                icon: Icon(Icons.add),
-              ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
