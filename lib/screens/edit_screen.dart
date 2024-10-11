@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditScreen extends StatefulWidget {
-
   Transactions statement;
 
   EditScreen({super.key, required this.statement});
@@ -66,29 +65,27 @@ class _EditScreenState extends State<EditScreen> {
                 TextButton(
                     child: const Text('แก้ไขข้อมูล'),
                     onPressed: () {
-                          if (formKey.currentState!.validate())
-                            {
-                              // create transaction data object
-                              var statement = Transactions(
-                                  keyID: widget.statement.keyID,
-                                  title: titleController.text,
-                                  amount: double.parse(amountController.text),
-                                  date: DateTime.now()
-                                  );
-                            
-                              // add transaction data object to provider
-                              var provider = Provider.of<TransactionProvider>(context, listen: false);
-                              
-                              provider.updateTransaction(statement);
+                      if (formKey.currentState!.validate()) {
+                        var statement = Transactions(
+                            keyID: widget.statement.keyID,
+                            title: titleController.text,
+                            amount: double.parse(amountController.text),
+                            date: DateTime.now());
 
-                              Navigator.push(context, MaterialPageRoute(
+                        var provider = Provider.of<TransactionProvider>(context,
+                            listen: false);
+
+                        provider.updateTransaction(statement);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
                                 fullscreenDialog: true,
-                                builder: (context){
+                                builder: (context) {
                                   return MyHomePage();
-                                }
-                              ));
-                            }
-                        })
+                                }));
+                      }
+                    })
               ],
             )));
   }

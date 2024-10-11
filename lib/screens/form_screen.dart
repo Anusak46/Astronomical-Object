@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:account/provider/transaction_provider.dart';
 
 class FormScreen extends StatefulWidget {
-
-
   const FormScreen({super.key});
 
   @override
@@ -23,7 +21,6 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
         appBar: AppBar(
           title: const Text('แบบฟอร์มเพิ่มข้อมูล'),
@@ -64,29 +61,27 @@ class _FormScreenState extends State<FormScreen> {
                 TextButton(
                     child: const Text('บันทึก'),
                     onPressed: () {
-                          if (formKey.currentState!.validate())
-                            {
-                              // create transaction data object
-                              var statement = Transactions(
-                                  keyID: null,
-                                  title: titleController.text,
-                                  amount: double.parse(amountController.text),
-                                  date: DateTime.now()
-                                  );
-                            
-                              // add transaction data object to provider
-                              var provider = Provider.of<TransactionProvider>(context, listen: false);
-                              
-                              provider.addTransaction(statement);
+                      if (formKey.currentState!.validate()) {
+                        var statement = Transactions(
+                            keyID: null,
+                            title: titleController.text,
+                            amount: double.parse(amountController.text),
+                            date: DateTime.now());
 
-                              Navigator.push(context, MaterialPageRoute(
+                        var provider = Provider.of<TransactionProvider>(context,
+                            listen: false);
+
+                        provider.addTransaction(statement);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
                                 fullscreenDialog: true,
-                                builder: (context){
+                                builder: (context) {
                                   return MyHomePage();
-                                }
-                              ));
-                            }
-                        })
+                                }));
+                      }
+                    })
               ],
             )));
   }
