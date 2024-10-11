@@ -114,7 +114,7 @@ class _EditScreenState extends State<EditScreen> {
                             title1: name.text,
                             title2: Type.text,
                             title3: Catalog.text,
-                            amount: double.parse(amountController.text),
+                            amount: int.parse(amountController.text),
                             date: DateTime.now());
 
                         var provider = Provider.of<TransactionProvider>(context,
@@ -127,7 +127,7 @@ class _EditScreenState extends State<EditScreen> {
                             MaterialPageRoute(
                                 fullscreenDialog: true,
                                 builder: (context) {
-                                  return MyHomePage();
+                                  return const MyHomePage();
                                 }));
                       }
                     })

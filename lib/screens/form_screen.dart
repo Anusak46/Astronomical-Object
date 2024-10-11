@@ -142,7 +142,7 @@ class _FormScreenState extends State<FormScreen> {
                           title1: name.text,
                           title2: type.text,
                           title3: Catalog.text,
-                          amount: double.parse(amountController.text),
+                          amount: int.parse(amountController.text),
                           date: DateTime.now(),
                         );
 

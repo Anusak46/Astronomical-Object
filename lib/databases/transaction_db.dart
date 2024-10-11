@@ -48,7 +48,7 @@ class TransactionDB {
           title1: record['title1'].toString(),
           title2: record['title2'].toString(),
           title3: record['title3'].toString(),
-          amount: double.parse(record['amount'].toString()),
+          amount: int.parse(record['amount'].toString()),
           date: DateTime.parse(record['date'].toString())));
     }
     db.close();
