@@ -53,10 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text("แอพบัญชี"),
+          title: const Text("Astronomical Object"),
           actions: [
             IconButton(
               icon: const Icon(Icons.exit_to_app),
+              color: Colors.red,
               onPressed: () {
                 SystemNavigator.pop();
               },
@@ -68,12 +69,12 @@ class _MyHomePageState extends State<MyHomePage> {
             TabBar(
               tabs: [
                 Tab(
-                  text: "รายการธุรกรรม",
-                  icon: Icon(Icons.list),
+                  text: "วัตถุท้องฟ้า",
+                  icon: Icon(Icons.public),
                 ),
                 Tab(
-                  text: "เพิ่มข้อมูล",
-                  icon: Icon(Icons.add),
+                  text: "เพิ่มวัตถุ",
+                  icon: Icon(Icons.add_circle_outline),
                 ),
               ],
             ),
