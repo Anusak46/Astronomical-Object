@@ -52,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
           title: const Text("Astronomical Object"),
           actions: [
             IconButton(
@@ -64,29 +65,35 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-        body: const Column(
-          children: [
-            TabBar(
-              tabs: [
-                Tab(
-                  text: "วัตถุท้องฟ้า",
-                  icon: Icon(Icons.public),
-                ),
-                Tab(
-                  text: "เพิ่มวัตถุ",
-                  icon: Icon(Icons.add_circle_outline),
-                ),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  HomeScreen(),
-                  FormScreen(),
+        body: Container(
+          color: const Color.fromARGB(255, 32, 32, 32),
+          child: const Column(
+            children: [
+              TabBar(
+                labelColor: Color.fromARGB(255, 255, 255, 255),
+                unselectedLabelColor: Color.fromARGB(255, 153, 153, 153),
+                indicatorColor: Color.fromARGB(255, 255, 255, 255),
+                tabs: [
+                  Tab(
+                    text: "วัตถุท้องฟ้า",
+                    icon: Icon(Icons.public),
+                  ),
+                  Tab(
+                    text: "เพิ่มวัตถุ",
+                    icon: Icon(Icons.add_circle_outline),
+                  ),
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    HomeScreen(),
+                    FormScreen(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
