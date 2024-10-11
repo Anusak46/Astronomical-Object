@@ -13,6 +13,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isAscending = true;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchText = '';
+  String _selectedCategory = 'ทั้งหมด';
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +29,105 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text(
-            'ลำดับวัตถุท้องฟ้า',
-            style: TextStyle(
-              color: Color.fromARGB(255, 255, 255, 255),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                isAscending ? Icons.arrow_upward : Icons.arrow_downward,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  isAscending = !isAscending;
-                });
-              },
-            ),
-          ],
-          backgroundColor: Colors.grey.withOpacity(0.3),
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color.fromARGB(255, 56, 56, 56),
           elevation: 0,
           toolbarHeight: 40,
+          title: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.search, color: Colors.white, size: 18),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'ค้นหา...',
+                            hintStyle:
+                                TextStyle(color: Colors.white70, fontSize: 14),
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
+                          onChanged: (text) {
+                            setState(() {
+                              _searchText = text;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DropdownButton<String>(
+                  value: _selectedCategory,
+                  dropdownColor: Colors.grey[800],
+                  underline: const SizedBox(),
+                  icon:
+                      const Icon(Icons.category, color: Colors.white, size: 18),
+                  items: <String>[
+                    'ทั้งหมด',
+                    'Star',
+                    'Galaxy',
+                    'Nebula',
+                    'Globular Cluster',
+                    'Planet'
+                  ].map((String category) {
+                    return DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(
+                        category,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedCategory = newValue!;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    isAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isAscending = !isAscending;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
         body: Consumer<TransactionProvider>(
           builder: (context, provider, child) {
@@ -58,15 +136,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('ไม่มีรายการ'),
               );
             } else {
-              var sortedTransactions = provider.transactions.toList();
-              sortedTransactions.sort((a, b) => isAscending
+              var filteredTransactions =
+                  provider.transactions.where((transaction) {
+                bool matchesSearchText =
+                    transaction.title.contains(_searchText) ||
+                        transaction.title2.contains(_searchText);
+                bool matchesCategory = _selectedCategory == 'ทั้งหมด' ||
+                    transaction.title2 == _selectedCategory;
+                return matchesSearchText && matchesCategory;
+              }).toList();
+
+              filteredTransactions.sort((a, b) => isAscending
                   ? a.amount.compareTo(b.amount)
                   : b.amount.compareTo(a.amount));
 
               return ListView.builder(
-                itemCount: sortedTransactions.length,
+                itemCount: filteredTransactions.length,
                 itemBuilder: (context, index) {
-                  var statement = sortedTransactions[index];
+                  var statement = filteredTransactions[index];
                   return Card(
                     elevation: 5,
                     margin:
