@@ -25,6 +25,9 @@ class TransactionDB {
 
     var keyID = store.add(db, {
       "title": statement.title,
+      "title1": statement.title1,
+      "title2": statement.title2,
+      "title3": statement.title3,
       "amount": statement.amount,
       "date": statement.date.toIso8601String()
     });
@@ -42,6 +45,9 @@ class TransactionDB {
       transactions.add(Transactions(
           keyID: record.key,
           title: record['title'].toString(),
+          title1: record['title1'].toString(),
+          title2: record['title2'].toString(),
+          title3: record['title3'].toString(),
           amount: double.parse(record['amount'].toString()),
           date: DateTime.parse(record['date'].toString())));
     }
@@ -63,6 +69,9 @@ class TransactionDB {
     var filter = Finder(filter: Filter.equals(Field.key, statement.keyID));
     var result = store.update(db, finder: filter, {
       "title": statement.title,
+      "title1": statement.title1,
+      "title2": statement.title2,
+      "title3": statement.title3,
       "amount": statement.amount,
       "date": statement.date.toIso8601String()
     });

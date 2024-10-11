@@ -1,7 +1,6 @@
 import 'package:account/main.dart';
 import 'package:account/models/transactions.dart';
 import 'package:account/provider/transaction_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,13 +20,20 @@ class _EditScreenState extends State<EditScreen> {
 
   final amountController = TextEditingController();
 
+  final name = TextEditingController();
+  final Type = TextEditingController();
+  final Catalog = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     titleController.text = widget.statement.title;
+    name.text = widget.statement.title1;
+    Type.text = widget.statement.title2;
+    Catalog.text = widget.statement.title3;
     amountController.text = widget.statement.amount.toString();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('แบบฟอร์มแก้ไขข้อมูล'),
+          title: const Text('แบบฟอร์มแก้ไขข้อมูล วัตถุท้องฟ้า'),
         ),
         body: Form(
             key: formKey,
@@ -35,7 +41,7 @@ class _EditScreenState extends State<EditScreen> {
               children: [
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'ชื่อรายการ',
+                    labelText: 'รหัสวัตถุ',
                   ),
                   autofocus: false,
                   controller: titleController,
@@ -47,7 +53,43 @@ class _EditScreenState extends State<EditScreen> {
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'จำนวนเงิน',
+                    labelText: 'ชื่อวัตถุ',
+                  ),
+                  autofocus: false,
+                  controller: name,
+                  validator: (String? str) {
+                    if (str!.isEmpty) {
+                      return 'กรุณากรอกข้อมูล';
+                    }
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'ประเภท',
+                  ),
+                  autofocus: false,
+                  controller: Type,
+                  validator: (String? str) {
+                    if (str!.isEmpty) {
+                      return 'กรุณากรอกข้อมูล';
+                    }
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'แคตาล็อก',
+                  ),
+                  autofocus: false,
+                  controller: Catalog,
+                  validator: (String? str) {
+                    if (str!.isEmpty) {
+                      return 'กรุณากรอกข้อมูล';
+                    }
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    labelText: 'ลำดับวัตถุ',
                   ),
                   keyboardType: TextInputType.number,
                   controller: amountController,
@@ -69,6 +111,9 @@ class _EditScreenState extends State<EditScreen> {
                         var statement = Transactions(
                             keyID: widget.statement.keyID,
                             title: titleController.text,
+                            title1: name.text,
+                            title2: Type.text,
+                            title3: Catalog.text,
                             amount: double.parse(amountController.text),
                             date: DateTime.now());
 
