@@ -5,6 +5,7 @@ import 'package:account/models/transactions.dart';
 class TransactionProvider with ChangeNotifier {
   List<Transactions> transactions = [];
   List<Transactions> transactionHistory = [];
+  List<Transactions> deletedTransactions = [];
 
   List<Transactions> getTransaction() {
     return transactions;
@@ -12,6 +13,10 @@ class TransactionProvider with ChangeNotifier {
 
   List<Transactions> getTransactionHistory() {
     return transactionHistory;
+  }
+
+  List<Transactions> getDeletedTransactions() {
+    return deletedTransactions;
   }
 
   void initData() async {
@@ -41,7 +46,7 @@ class TransactionProvider with ChangeNotifier {
 
     await db.deleteDatabase(index);
 
-    transactionHistory.add(deletedTransaction);
+    deletedTransactions.add(deletedTransaction);
     this.transactions = await db.loadAllData();
     print('Deleted transaction: $deletedTransaction');
     notifyListeners();
